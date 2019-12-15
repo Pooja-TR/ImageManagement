@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Samples">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/metadata-extractor-2.12.0/Samples" />
+      <root url="file://$PROJECT_DIR$/metadata-extractor-2.12.0/Source" />
+      <root url="file://$PROJECT_DIR$/metadata-extractor-2.12.0/Tests" />
+    </SOURCES>
+  </library>
+</component>
