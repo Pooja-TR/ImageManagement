@@ -45,7 +45,6 @@ import javax.swing.*;
 import static java.nio.file.Files.copy;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
-
 public class Controller extends Main {
     @FXML
     private Button uploadButton;
@@ -66,8 +65,7 @@ public class Controller extends Main {
     private ScrollPane gallery;
 
     /**
-     * Helper function for deleteExt
-     * Create a function to get basename
+     * Helper function for deleteExt Create a function to get basename
      */
     public String getBaseName(File file) {
         String name = file.getName();
@@ -77,8 +75,7 @@ public class Controller extends Main {
     }
 
     /**
-     * Helper function for deleteExt
-     * Create a function to eliminate format
+     * Helper function for deleteExt Create a function to eliminate format
      */
     public String deleteExt(File file) {
         String parentPath = file.getParent();
@@ -88,9 +85,8 @@ public class Controller extends Main {
     }
 
     /**
-     * Main function to upload the image and printout message
-     * Create a function to browse multiple file on the disk
-     * upload to the indicated file
+     * Main function to upload the image and printout message Create a function to
+     * browse multiple file on the disk upload to the indicated file
      */
     public void BrowseMultiFile(ActionEvent event) {
         // Browse multiple file
@@ -108,7 +104,7 @@ public class Controller extends Main {
                 listView.getItems().add(file.getName());
 
                 // show image, port from the show image
-                Image image = new Image("file:" +file.getAbsolutePath());
+                Image image = new Image("file:" + file.getAbsolutePath());
                 ImageView img = new ImageView(image);
 
                 // set the image to printout
@@ -120,25 +116,24 @@ public class Controller extends Main {
                 thumbnailBox.getChildren().add(img);
 
                 // upload chosen file to target img destination
-                File destFile = new File(new File(file.getParent()).getParent() + "\\img\\" +file.getName());
+                File destFile = new File(new File(file.getParent()).getParent() + "\\img\\" + file.getName());
                 upload(file, destFile);
 
                 // initial metadata for exif
                 Metadata metadata = null;
 
                 // determine the image's format to analyse the exif
-                if(getExtension(file).equalsIgnoreCase("JPG")){
+                if (getExtension(file).equalsIgnoreCase("JPG")) {
                     metadata = JpegMetadataReader.readMetadata(file);
-                }
-                else if(getExtension(file).equalsIgnoreCase("png")){
+                } else if (getExtension(file).equalsIgnoreCase("png")) {
                     metadata = PngMetadataReader.readMetadata(file);
                 }
 
                 // print the exif information to the list view
                 for (Directory directory : metadata.getDirectories()) {
                     for (Tag tag : directory.getTags()) {
-                        listView.getItems().add(String.format("[%s] - %s = %s", directory.getName(),
-                                tag.getTagName(), tag.getDescription()));
+                        listView.getItems().add(String.format("[%s] - %s = %s", directory.getName(), tag.getTagName(),
+                                tag.getDescription()));
                     }
                     if (directory.hasErrors()) {
                         for (String error : directory.getErrors()) {
@@ -154,6 +149,7 @@ public class Controller extends Main {
 
     /**
      * Create a function to upload files
+     * 
      * @param source
      * @param dest
      * @throws IOException
@@ -177,12 +173,13 @@ public class Controller extends Main {
             bufferIn = ImageIO.read(file);
 
             // create the buffer out image
-            BufferedImage bufferOut =
-                    new BufferedImage(bufferIn.getWidth(), bufferIn.getHeight(), BufferedImage.TYPE_INT_RGB);
+            BufferedImage bufferOut = new BufferedImage(bufferIn.getWidth(), bufferIn.getHeight(),
+                    BufferedImage.TYPE_INT_RGB);
             bufferOut.createGraphics().drawImage(bufferIn, 0, 0, Color.white, null);
 
-            // output the buffer image to the png format to the same directory, with _convert annotation
-            ImageIO.write(bufferOut, "jpg", new File(deleteExt(file)+"_convert.png"));
+            // output the buffer image to the png format to the same directory, with
+            // _convert annotation
+            ImageIO.write(bufferOut, "jpg", new File(deleteExt(file) + "_convert.png"));
 
             // show complete message
             JOptionPane.showMessageDialog(null, "Done");
@@ -206,12 +203,13 @@ public class Controller extends Main {
             bufferIn = ImageIO.read(file);
 
             // create the buffer out image
-            BufferedImage bufferOut =
-                    new BufferedImage(bufferIn.getWidth(), bufferIn.getHeight(), BufferedImage.TYPE_INT_RGB);
+            BufferedImage bufferOut = new BufferedImage(bufferIn.getWidth(), bufferIn.getHeight(),
+                    BufferedImage.TYPE_INT_RGB);
             bufferOut.createGraphics().drawImage(bufferIn, 0, 0, Color.white, null);
 
-            // output the buffer image to the jpg format to the same directory, with _convert annotation
-            ImageIO.write(bufferOut, "png", new File(deleteExt(file)+"_convert.jpg"));
+            // output the buffer image to the jpg format to the same directory, with
+            // _convert annotation
+            ImageIO.write(bufferOut, "png", new File(deleteExt(file) + "_convert.jpg"));
 
             // show complete message
             JOptionPane.showMessageDialog(null, "Done");
@@ -221,19 +219,18 @@ public class Controller extends Main {
     }
 
     /**
-     * Helper function to get the file's extension
-     * Create a function to get extension, return the file's extension
+     * Helper function to get the file's extension Create a function to get
+     * extension, return the file's extension
      */
     public String getExtension(File file) {
         String name = file.getName();
         int dot = name.lastIndexOf('.');
-        return (dot == -1) ? "" : name.substring(dot+1);
+        return (dot == -1) ? "" : name.substring(dot + 1);
     }
 
-
     /**
-     * Helper function for multiple file upload
-     * Create a function to browse single file on the disk
+     * Helper function for multiple file upload Create a function to browse single
+     * file on the disk
      */
     public void BrowseSingleFile(ActionEvent event) {
         // Browse single file
@@ -252,11 +249,10 @@ public class Controller extends Main {
         }
     }
 
-
     /**
-     * Helper function for testing thumbnail upload and detail printout
-     * Create a function to show image chosen
-     * (Runtime exception: NullPointer Error when directly use shift to select all without a starting file)
+     * Helper function for testing thumbnail upload and detail printout Create a
+     * function to show image chosen (Runtime exception: NullPointer Error when
+     * directly use shift to select all without a starting file)
      *
      */
     public void showImage(ActionEvent event) {
@@ -266,7 +262,7 @@ public class Controller extends Main {
             File file = fc.showOpenDialog(null);
 
             // create image and image view for tests
-            Image image = new Image("file:" +file.getAbsolutePath());
+            Image image = new Image("file:" + file.getAbsolutePath());
             ImageView img = new ImageView(image);
 
             // image height restriction tester
@@ -282,14 +278,13 @@ public class Controller extends Main {
 
             // Metadata output tester
             // check the input stream
-            FileInputStream inputStream = new FileInputStream("file:" +file.getAbsolutePath());
+            FileInputStream inputStream = new FileInputStream("file:" + file.getAbsolutePath());
             Metadata metadata = ImageMetadataReader.readMetadata(inputStream);
 
             // printout the exif information
             for (Directory directory : metadata.getDirectories()) {
                 for (Tag tag : directory.getTags()) {
-                    System.out.format("[%s] - %s = %s",
-                            directory.getName(), tag.getTagName(), tag.getDescription());
+                    System.out.format("[%s] - %s = %s", directory.getName(), tag.getTagName(), tag.getDescription());
                 }
                 if (directory.hasErrors()) {
                     for (String error : directory.getErrors()) {
@@ -304,12 +299,10 @@ public class Controller extends Main {
         }
     }
 
-
     /**
-     * Helper function
-     * Create a function to show exist uploaded images in thumbnail gallery
-     * To check whether the image is in the thumbnail list
-     * To refresh the thumbnail's image view
+     * Helper function Create a function to show exist uploaded images in thumbnail
+     * gallery To check whether the image is in the thumbnail list To refresh the
+     * thumbnail's image view
      */
     public void showGallery(ActionEvent event) {
         try {
@@ -333,25 +326,23 @@ public class Controller extends Main {
         }
     }
 
-
     /**
-     * Create a function to use IM4Java
-     * Intended to convert file format
+     * Create a function to use IM4Java Intended to convert file format
      */
     public void thumbnail(ActionEvent event) throws InterruptedException, IOException, IM4JavaException {
 
         // Set initial path
-        String imPath="C:\\Programs\\ImageMagick-7.0.9-Q16";
+        String imPath = "C:\\Programs\\ImageMagick-7.0.9-Q16";
         ConvertCmd cmd = new ConvertCmd();
         cmd.setSearchPath(imPath);
 
-        //Object pGlobalSearchPath = "C:\\Programs\\ImageMagick-7.0.9-Q16";
+        // Object pGlobalSearchPath = "C:\\Programs\\ImageMagick-7.0.9-Q16";
         ProcessStarter.setGlobalSearchPath("C:\\Programs\\ImageMagick-7.0.9-Q16");
 
         // create the operation, add images and operators/options
         IMOperation op = new IMOperation();
         op.addImage("Y:\\5100_Image_Management_Tool\\image\\img\\Shaka1.jpg");
-        op.resize(100,100);
+        op.resize(100, 100);
         op.addImage("Y:\\5100_Image_Management_Tool\\image\\img\\Shaka1.1.jpg");
 
         cmd.run(op);
