@@ -1,10 +1,5 @@
 # ImageManagement
 
-5100 Final project
-
-Author: Qianli Zhang, 
-        Xintong Zhao
-
 ====================================================================
 
 Requirement:
@@ -36,3 +31,7 @@ Option # 1 (Image Management Tool):
   import metadata-extractor for metadata
 
 - Screenshots and class diagram are in the Screenshot and annotation folder
+ 
+====================================================================
+ 
+ Edit the CSS in the scene builder
