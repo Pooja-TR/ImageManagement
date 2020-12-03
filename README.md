@@ -33,5 +33,5 @@ Option # 1 (Image Management Tool):
 - Screenshots and class diagram are in the Screenshot and annotation folder
  
 ====================================================================
- Languages used: JAVA , javafx , fxml , javascript , html 
+ Languages used: JAVA , javafx , fxml , javascript , html and C
  Edit the CSS in the scene builder
